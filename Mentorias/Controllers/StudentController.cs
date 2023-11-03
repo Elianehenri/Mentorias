@@ -1,7 +1,9 @@
 ﻿using Mentorias.Dtos;
+using Mentorias.Interfaces.Repositories;
 using Mentorias.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Mentorias.Controllers
 {
@@ -19,7 +21,9 @@ namespace Mentorias.Controllers
             _logger = logger;
         }
 
+
         [HttpGet]
+        //somente os professores
         public IActionResult GetAllStudents()
         {
             try
@@ -40,6 +44,7 @@ namespace Mentorias.Controllers
 
         [HttpGet]
         [Route("idStudent")]
+        //somente os professores
         public IActionResult GetStudentById(int idStudent)
         {
             try
@@ -59,6 +64,8 @@ namespace Mentorias.Controllers
         }
 
         [HttpDelete]
+        //somente os professores
+
         public IActionResult DeleteStudent(int idStudent)
         {
             try
@@ -77,25 +84,41 @@ namespace Mentorias.Controllers
             }
         }
 
-        [HttpPut]
-        [Authorize(Roles = "Student")]
+        
 
-        public IActionResult UpdateStudent( StudentRequestDto studentRequest)
+        [HttpPut]
+        [Authorize]
+        public IActionResult UpdateStudentProfile(StudentRequestDto studentRequest)
         {
-            try
+            var idStudent = GetAuthenticatedUserId(); // Obtenha o ID do usuário autenticado.
+
+            if (idStudent != null)
             {
-                _studentService.UpdateStudent(studentRequest);
-                return Ok("Estudante atualizado com sucesso");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Ocorreu um erro ao atualizar o estudante: " + e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDto()
+                try
                 {
-                    Description = "Ocorreu um erro ao atualizar o estudante",
-                    Status = StatusCodes.Status500InternalServerError
-                });
+                    _studentService.UpdateStudent(studentRequest, idStudent);
+                    return Ok("Perfil do estudante atualizado com sucesso.");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Ocorreu um erro ao atualizar o estudante: " + e.Message);
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDto()
+                    {
+                        Description = "Ocorreu um erro ao atualizar o estudante",
+                        Status = StatusCodes.Status500InternalServerError
+                    });
+                }
             }
+
+            return Forbid(); //retorna HTTP 403 
+            
+
+        }
+
+        private int? GetAuthenticatedUserId()
+        {
+            var idStudent = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return idStudent != null ? int.Parse(idStudent) : (int?)null;
         }
 
     }

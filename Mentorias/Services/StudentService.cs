@@ -134,15 +134,25 @@ namespace Mentorias.Services
             return student;
         }
 
-        public void UpdateStudent(StudentRequestDto studentRequest)
+        
+        public void UpdateStudent(StudentRequestDto studentRequest, int? idStudent)
         {
+            // Verifique se o usuário autenticado está atualizando seu próprio perfil.
             var studentDb = _studentRepository.GetStudentById(studentRequest.Id);
+
             if (studentDb == null)
             {
-                throw new Exception("Id não encontrado");
+                throw new Exception("Estudante não encontrado");
             }
+
+            if (studentDb.StudentId != idStudent)
+            {
+                throw new Exception("Você não tem permissão para atualizar este perfil");
+            }
+
             studentDb.Name = studentRequest.Name;
             studentDb.Email = studentRequest.Email;
+
             _studentRepository.UpdateStudent(studentDb);
         }
 
