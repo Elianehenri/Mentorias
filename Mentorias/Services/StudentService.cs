@@ -3,11 +3,8 @@ using Mentorias.Enums;
 using Mentorias.Interfaces.Repositories;
 using Mentorias.Interfaces.Services;
 using Mentorias.Models;
-using Mentorias.Security;
 using Mentorias.Utils;
 using Mentorias.Validators;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace Mentorias.Services
 {
@@ -66,7 +63,7 @@ namespace Mentorias.Services
                     Email = studentRegisterDto.Email.ToLower(),
                     CPF = studentRegisterDto.CPF,
                     Password = HashUtility.GenerateSHA256Hash(studentRegisterDto.Password),
-                    UserType = studentRegisterDto.UserType
+                    UserType = UserType.Student
                 };
 
                 // Salvar no banco
@@ -111,12 +108,12 @@ namespace Mentorias.Services
             Students student = _studentRepository.GetStudentById(idStudent) ?? throw new Exception("Id não encontrado");
 
             // Retornar um objeto StudentResponseDto
-            StudentResponseDto studentResponseDto = new StudentResponseDto
+            StudentResponseDto studentResponseDto = new()
             {
                 Name = student.Name,
                 Email = student.Email,
                 UserType = student.UserType
-                //UserType = (UserType)student.UserType
+                
             };
 
             return studentResponseDto;
@@ -127,24 +124,14 @@ namespace Mentorias.Services
         {
             //Verificar se student existe no banco de dados
             Students student = _studentRepository.GetStudentLogin(email.ToLower(), HashUtility.GenerateSHA256Hash(password));
-            if (student == null)
-            {
-                throw new Exception("Email ou senha inválidos");
-            }
-            return student;
+            return student ?? throw new Exception("Email ou senha inválidos");
         }
 
-        
+
         public void UpdateStudent(StudentRequestDto studentRequest, int? idStudent)
         {
             // Verifique se o usuário autenticado está atualizando seu próprio perfil.
-            var studentDb = _studentRepository.GetStudentById(studentRequest.Id);
-
-            if (studentDb == null)
-            {
-                throw new Exception("Estudante não encontrado");
-            }
-
+            var studentDb = _studentRepository.GetStudentById(studentRequest.Id) ?? throw new Exception("Estudante não encontrado");
             if (studentDb.StudentId != idStudent)
             {
                 throw new Exception("Você não tem permissão para atualizar este perfil");
@@ -161,8 +148,7 @@ namespace Mentorias.Services
             //verificar se email existe no banco de dados
             return _studentRepository.CheckEmail(email);
         }
-
-        bool IStudentService.CheckCPF(string cpf)
+        public bool CheckCPF(string cpf)
         {
            //verficar se cpf existe no banco de dados
             return _studentRepository.CheckCPF(cpf);

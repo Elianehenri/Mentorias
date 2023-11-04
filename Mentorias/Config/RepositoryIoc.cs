@@ -7,8 +7,8 @@ namespace Mentorias.Config
     {
         public static void RegisterServices(IServiceCollection builder)
         {
-            //builder.AddScoped<ITeacherRepository, TeacherRepository>();
-            builder.AddScoped<IStudentRepository, StudentRepositoriy>();
+            builder.AddScoped<ITeacherRepository, TeacherRepository>();
+            builder.AddScoped<IStudentRepository, StudentRepository>();
         }
            
     }

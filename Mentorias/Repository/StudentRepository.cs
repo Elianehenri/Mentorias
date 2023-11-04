@@ -4,11 +4,11 @@ using Mentorias.Models;
 
 namespace Mentorias.Repository
 {
-    public class StudentRepositoriy : IStudentRepository
+    public class StudentRepository : IStudentRepository
     {
         private readonly MentorShipContext _context;
 
-        public StudentRepositoriy(MentorShipContext context)
+        public StudentRepository(MentorShipContext context)
         {
             _context = context;
         }
@@ -61,9 +61,11 @@ namespace Mentorias.Repository
             _context.SaveChanges();
         }
 
-        bool IStudentRepository.CheckCPF(string cpf)
+        public bool  CheckCPF(string cpf)
         {
             return _context.Students.Any(x => x.CPF == cpf);
         }
+        
+
     }
 }
