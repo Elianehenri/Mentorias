@@ -11,6 +11,7 @@ namespace Mentorias.Config
         {
             builder.AddScoped<ITeacherService, TeacherService>();
             builder.AddScoped<IStudentService, StudentService>();
+            builder.AddScoped<IMentorService, MentorService>();
             
         }
     }

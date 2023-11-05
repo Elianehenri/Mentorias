@@ -9,6 +9,7 @@ namespace Mentorias.Config
         {
             builder.AddScoped<ITeacherRepository, TeacherRepository>();
             builder.AddScoped<IStudentRepository, StudentRepository>();
+            builder.AddScoped<IMentorRepository, MentorRepository>();
         }
            
     }

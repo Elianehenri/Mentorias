@@ -7,12 +7,12 @@ namespace Mentorias.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class StudentAuthController : ControllerBase
     { //controller de log
-        private readonly ILogger<AuthController> _logger;
+        private readonly ILogger<StudentAuthController> _logger;
         private readonly IStudentService _studentService;
 
-        public AuthController(ILogger<AuthController> logger, IStudentService studentService)
+        public StudentAuthController(ILogger<StudentAuthController> logger, IStudentService studentService)
         {
             _logger = logger;
             _studentService = studentService;
