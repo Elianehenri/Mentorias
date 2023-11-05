@@ -5,6 +5,8 @@ using Mentorias.Interfaces.Services;
 using Mentorias.Models;
 using Mentorias.Utils;
 using Mentorias.Validators;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mentorias.Services
 {
@@ -108,7 +110,9 @@ namespace Mentorias.Services
 
         public List<MentorShip> GetMentorShipsByTeacherId(int idTeacher)
         {
-            throw new NotImplementedException();
+      
+            return _teacherRepository.GetMentorShipsByTeacherId(idTeacher);
+            
         }
 
         public TeacherResponseDto GetTeacherById(int idTeacher)
@@ -188,5 +192,7 @@ namespace Mentorias.Services
 
             _teacherRepository.UpdateTeacher(teacherDb);
         }
+
+       
     }
 }

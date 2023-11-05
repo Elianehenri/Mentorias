@@ -93,7 +93,8 @@ namespace Mentorias.Services
 
         public List<MentorShip> GetMentorShipsByStudentId(int id)
         {
-            throw new NotImplementedException();
+           
+            return _studentRepository.GetMentorShipsByStudentId(id);
         }
 
         public StudentResponseDto GetStudentById(int idStudent)

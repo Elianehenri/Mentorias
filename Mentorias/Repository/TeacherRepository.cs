@@ -59,7 +59,8 @@ namespace Mentorias.Repository
 
         List<MentorShip> ITeacherRepository.GetMentorShipsByTeacherId(int idTeacher)
         {
-            throw new NotImplementedException();
+            return _context.Mentorships.Where(x => x.TeacherId == idTeacher).ToList();
+            
         }
     }
 }

@@ -36,7 +36,8 @@ namespace Mentorias.Repository
 
         public List<MentorShip> GetMentorShipsByStudentId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Mentorships.Where(x => x.StudentId == id).ToList();
+            
         }
 
         //buscar por id

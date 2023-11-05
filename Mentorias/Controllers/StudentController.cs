@@ -84,7 +84,41 @@ namespace Mentorias.Controllers
             }
         }
 
-        
+        [HttpGet]
+        [Authorize]
+        [Route("mentorships")]
+
+        public IActionResult GetMentorShipsByStudentId()
+        {
+            try
+            {
+                // Obtém o ID do aluno autenticado usando o método GetAuthenticatedUserId()
+                int? idStudent = GetAuthenticatedUserId();
+
+                // Verifica se o ID do aluno autenticado é nulo
+                if (!idStudent.HasValue)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, new ErrorResponseDto()
+                    {
+                        Description = "Acesso não autorizado. O aluno não está autenticado.",
+                        Status = StatusCodes.Status401Unauthorized
+                    });
+                }
+
+                var mentorships = _studentService.GetMentorShipsByStudentId(idStudent.Value);
+                return Ok(mentorships);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Ocorreu um erro ao obter as mentorias do estudante: " + e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDto()
+                {
+                    Description = "Ocorreu um erro ao obter as mentorias do estudante",
+                    Status = StatusCodes.Status500InternalServerError
+                });
+            }
+        }
+
 
         [HttpPut]
         [Authorize]

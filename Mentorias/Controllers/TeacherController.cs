@@ -50,6 +50,34 @@ namespace Mentorias.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("mentorships")]
+        public IActionResult GetMentorShipsByTeacherId()
+        {
+            var idTeacher = GetAuthenticatedUserId();// Obtenha o ID do usuário autenticado.
+            if (idTeacher != null)
+            {
+                try
+                {
+                    var mentorShips = _teacherService.GetMentorShipsByTeacherId(idTeacher.Value);
+                    return Ok(mentorShips);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Erro ao obter mentorias do professor" + e.Message);
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDto()
+                    {
+                        Description = "Ocorreu um erro ao obter as mentorias do professor.",
+                        Status = StatusCodes.Status500InternalServerError
+                    });
+
+                }
+
+            }
+            return Unauthorized();
+        }
+
         [HttpDelete]
         public IActionResult DeleteTeacher(int idTeacher)
         {
