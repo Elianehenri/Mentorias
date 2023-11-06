@@ -32,7 +32,7 @@ namespace Mentorias.Controllers
                 _logger.LogError(ex, "Erro ao buscar mentoria");
                 return StatusCode(500, "Erro ao buscar mentoria");
             }
-          
+
         }
 
         [HttpGet]
@@ -51,6 +51,25 @@ namespace Mentorias.Controllers
             }
         }
 
+      
+        [HttpGet("search")]
+        [Authorize]
+        public IActionResult Get(DateTime date)
+        {
+            try
+            {
+                var mentorships = _mentorService.GetMentorshipsByDateTime(date);
+                return Ok(mentorships);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar mentoria");
+                return StatusCode(500, "Erro ao buscar mentoria");
+            }
+
+            
+        }
+   
         [HttpPost]
         [Authorize]
         public IActionResult Post([FromBody] MentorShipDto mentorshipdto)

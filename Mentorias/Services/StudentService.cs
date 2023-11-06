@@ -18,6 +18,8 @@ namespace Mentorias.Services
             _studentRepository = studentRepository;
             _configuration = configuration;
         }
+      
+
 
         public void CreateStudent(StudentRegisterDto studentRegisterDto)
         {
@@ -181,5 +183,7 @@ namespace Mentorias.Services
 
 
         }
+
+       
     }
 }

@@ -45,5 +45,13 @@ namespace Mentorias.Repository
             _context.Mentorships.Remove(mentorship);
             _context.SaveChanges();
         }
+
+        public List<MentorShip> GetMentorshipsByDateTime(DateTime date)
+        {
+            return _context.Mentorships.Where(m => m.Date == date).ToList();
+
+        }
+
+       
     }
 }

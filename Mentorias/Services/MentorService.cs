@@ -2,6 +2,7 @@
 using Mentorias.Interfaces.Repositories;
 using Mentorias.Interfaces.Services;
 using Mentorias.Models;
+using System.Globalization;
 
 namespace Mentorias.Services
 {
@@ -48,7 +49,7 @@ namespace Mentorias.Services
 
         }
 
-        public void CreateMentorship( MentorShipDto mentorshipDto)
+        public void CreateMentorship(MentorShipDto mentorshipDto)
         {
             // Regra 1: Não pode cadastrar agendamentos com horários em conflito
             if (!IsTimeConflict(mentorshipDto))
@@ -63,8 +64,8 @@ namespace Mentorias.Services
                 var mentorship = new MentorShip
                 {
                     Date = mentorshipDto.Date,
-                    StartTime = mentorshipDto.StartTime,//configurar a hora 12:00
-                    EndTime = mentorshipDto.EndTime,///configurar a hora 12:00
+                    StartTime = mentorshipDto.StartTime,
+                    EndTime = mentorshipDto.EndTime,
                     Subject = mentorshipDto.Subject,
                     TeacherId = mentorshipDto.TeacherId,
                     StudentId = mentorshipDto.StudentId
@@ -77,6 +78,8 @@ namespace Mentorias.Services
                 throw new Exception("Já existe uma mentoria agendada para este horário.");
             }
         }
+    
+
 
 
 
@@ -109,6 +112,12 @@ namespace Mentorias.Services
 
         }
 
+        public List<MentorShip>  GetMentorshipsByDateTime(DateTime date)
+        {
+          
+            return _mentorRepository.GetMentorshipsByDateTime(date);
+
+        }
 
         private bool IsTimeConflict(MentorShipDto mentorshipDto)
         {
@@ -127,6 +136,6 @@ namespace Mentorias.Services
             return start1 < end2 && end1 > start2;
         }
 
-
+       
     }
 }

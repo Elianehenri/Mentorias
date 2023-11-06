@@ -6,7 +6,7 @@ namespace Mentorias.Interfaces.Repositories
     public interface ITeacherRepository : IBaseRepository
     {
 
-        //cria os metods para o repositorio de teacher
+        
 
         Teachers GetTeacherLogin(string email, string password);
         Teachers GetTeacherById(int idTeacher);

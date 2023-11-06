@@ -10,5 +10,7 @@ namespace Mentorias.Interfaces.Repositories
         void CreateMentorship(MentorShip mentorship);
         void UpdateMentorship(MentorShip mentorship);
         void DeleteMentorship(int id);
+        List<MentorShip> GetMentorshipsByDateTime(DateTime date);
+        
     }
 }

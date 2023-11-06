@@ -23,7 +23,7 @@ namespace Mentorias.Controllers
 
 
         [HttpGet]
-        //somente os professores
+        [Authorize]
         public IActionResult GetAllStudents()
         {
             try
@@ -42,9 +42,11 @@ namespace Mentorias.Controllers
             }
         }
 
+
+
         [HttpGet]
         [Route("idStudent")]
-        //somente os professores
+        [Authorize]
         public IActionResult GetStudentById(int idStudent)
         {
             try
@@ -64,7 +66,7 @@ namespace Mentorias.Controllers
         }
 
         [HttpDelete]
-        //somente os professores
+        
 
         public IActionResult DeleteStudent(int idStudent)
         {

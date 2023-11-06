@@ -11,7 +11,9 @@ namespace Mentorias.Interfaces.Services
         void CreateMentorship(MentorShipDto mentorshipdto);//ok - cadastro de mentoria 
         void UpdateMentorship(MentorShipDto mentorship, int userId);   //ok - atualizar mentoria  //void UpdateMentorship(MentorShipRequestDto mentorshipRquestdto);//ok - atualizar mentoria
         void DeleteMentorship(int id );//ok - deletar mentoria
+        List<MentorShip> GetMentorshipsByDateTime(DateTime date);
         
-       
+
+
     }
 }
