@@ -35,5 +35,11 @@ O projeto inclui as seguintes funcionalidades:
 6. Execute as migrações do Entity Framework Core com `dotnet ef database update`.
 7. Execute o projeto com `dotnet run`.
 
-   ## Eliane Henriqueta
+
+
+
+
+  #
+### Autor
+* **Eliane Henriqueta**
 
