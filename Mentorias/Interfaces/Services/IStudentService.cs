@@ -9,7 +9,7 @@ namespace Mentorias.Interfaces.Services
         public Students GetStudentLogin(string email, string password); //ok -obter de estudantes por email e senha
         public LoginResponseDto Login(LoginRequestDto loginRequestDto);//ok - login
         StudentResponseDto GetStudentById(int idStudent);//ok - studant
-        void CreateStudent( StudentRegisterDto teacherRegisterDto);//ok -cadastro de estudante
+        void CreateStudent( StudentRegisterDto studentRegisterDto);//ok -cadastro de estudante
 
         void UpdateStudent(StudentRequestDto studentRequest, int? idStudent);//ok - atualizar estudante
         void DeleteStudent(int idStudent);//ok -deletar estudante
